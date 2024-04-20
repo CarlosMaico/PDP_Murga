@@ -1,7 +1,14 @@
+{-# OPTIONS_GHC -Wno-overlapping-patterns #-}
+{-# LANGUAGE BinaryLiterals #-}
+{-# LANGUAGE NumDecimals #-}
 module Library where
 import PdePreludat
 import Data.Type.Equality (apply)
-import GHC.Base (Double)
+import GHC.Base (Double, Int)
+import GHC.Integer (Integer)
+import GHC.Num (Num)
+
+
 
 doble :: Number -> Number
 doble numero = numero + numero
@@ -67,5 +74,46 @@ data Bebida = Cafe {nombreBebida::String} |
               Gaseosa {sabor::String, azucar::Number}
 
 esEnergizante :: Bebida -> Bool
-esEnergizante (Cafe nombreCafe) = nombreCafe == "Capuchino"
-esEnergizante (Gaseosa sabor cantAzucar) = sabor == "pomelo" && cantAzucar > 10
+esEnergizante (Cafe "Capuchino") = True 
+esEnergizante (Gaseosa "pomelo" cantAzucar) = cantAzucar > 10
+esEnergizante _ = False
+
+
+--Clase 4
+--Aca las edades sin invocar la funcion siempre se mantiene la edad, osea la funcion utiliza el data para crear uno nuevo osea transformar pero no modifica
+
+data Persona = Persona {nomb :: String, edad :: Number} deriving Show
+
+julia :: Persona
+julia = Persona "julia" 21
+
+pedro :: Persona
+pedro = Persona "pedro" 26
+
+cumplirAños :: Persona -> Persona
+cumplirAños persona = persona {edad = edad persona + 1}--aca le suma 1 a edad del constructor
+
+
+find':: (a -> Bool) -> [a] -> a
+find' condicion lista = (head.filter condicion) lista
+
+data Politico = Politico {
+    proyectosPresentados :: [String],
+    sueldoo :: Number,
+    edadd :: Number
+} deriving Show
+
+
+politicos = [Politico ["ser libres", "libre estacionamieento coches politicos","ley no fumar", "ley 19182"] 20000 81,
+             Politico ["tratar de reconquistar luchas sociales"] 10000 63,
+             Politico ["tolerancia 100 para delitos"] 15500 49]
+
+type Nombre = String
+type Notas = [Number]
+data Alumno = Alumno {nombreAlumno :: Nombre, notas :: Notas}
+
+--promedioAlumnos :: [Alumno] -> [(Nombre, Number)]
+--promedioAlumnos alumnos = map (\alumno -> (nombreAlumno alumno, (promedioq.notas) alumno)) alumnos
+
+--promedioq :: Notas -> Number
+--promedioq notas = (sum notas) `div` (lenght notas)
