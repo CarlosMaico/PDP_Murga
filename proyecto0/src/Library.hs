@@ -112,8 +112,8 @@ type Nombre = String
 type Notas = [Number]
 data Alumno = Alumno {nombreAlumno :: Nombre, notas :: Notas}
 
---promedioAlumnos :: [Alumno] -> [(Nombre, Number)]
---promedioAlumnos alumnos = map (\alumno -> (nombreAlumno alumno, (promedioq.notas) alumno)) alumnos
+promedioAlumnos :: [Alumno] -> [(Nombre, Number)]
+promedioAlumnos alumnos = map (\alumno -> (nombreAlumno alumno, (promedioq.notas) alumno)) alumnos
 
---promedioq :: Notas -> Number
---promedioq notas = (sum notas) `div` (lenght notas)
+promedioq :: Notas -> Number
+promedioq notas = (sum notas) `div` (length notas)
