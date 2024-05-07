@@ -38,5 +38,9 @@ aprobo alumno = all (>=6) (notas alumno)
 aprobaron :: [Alumno] -> [Nombre]
 aprobaron alumnos = (map nombreAlumno . filter aprobo) alumnos
 
+productos :: [String] -> [Int] -> [(String, Int)]
+productos nombres precios = zip nombres precios
 
+productos' :: [String] -> [Int] -> [(String, Int)]
+productos' nombres precios = zipWith(\nom precio -> (nom, precio)) nombres precios 
 

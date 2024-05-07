@@ -35,7 +35,6 @@ area (Triangulo base altura) = (base*altura)/2
 area (Rectangulo base altura) = base*altura
 area (Circulo radio) = pi * radio^2
 
-
 type Dia = String
 type Hora = Int
 

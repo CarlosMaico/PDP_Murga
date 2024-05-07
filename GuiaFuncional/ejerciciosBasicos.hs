@@ -66,9 +66,9 @@ sumaNumerosImpares :: Int -> Int -> Int
 sumaNumerosImpares num1 num2 = sum [num2, num2 + 2 .. num2 +2 * (num1 -1)]
 
 esCuadradoPerfecto :: Int -> Bool
-esCuadradoPerfecto numero = numero `elem` [x*x | x<-[0..numero]]
+esCuadradoPerfecto numero = numero `elem` [x*x | x<-[0..numero]] --Explicar la lista por comprension
 
-numerosPares :: Integral a => [a] -> [a]
+numerosPares :: [Int] -> [Int]
 numerosPares numeros = [num | num<- numeros, even num]
 
 esCuadradoPerfectot :: Int -> Bool
