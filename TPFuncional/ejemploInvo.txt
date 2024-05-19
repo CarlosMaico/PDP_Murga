@@ -1,0 +1,2 @@
+ghci> ((`reevaluacion` 15) . crisis . (`remodelacion` 50) . (`sumarAtraccion` "prueba")) baradero
+Ciudad {nombre = "New Baradero", añoFundacion = 1615, atraccionesPrincipales = ["Parque del Este","Museo Alejandro Barbich"], costoDeVida = 240}
