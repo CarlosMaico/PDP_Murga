@@ -1,2 +1,44 @@
-ghci> ((`reevaluacion` 15) . crisis . (`remodelacion` 50) . (`sumarAtraccion` "prueba")) baradero
-Ciudad {nombre = "New Baradero", añoFundacion = 1615, atraccionesPrincipales = ["Parque del Este","Museo Alejandro Barbich"], costoDeVida = 240}
+Punto 1:
+ghci> valorDeUnaCiudad baradero
+925
+ghci> valorDeUnaCiudad nullish 
+280
+ghci> valorDeUnaCiudad caletaOlivia 
+360
+
+Punto 2:
+ghci> esAtraccionCopada seis
+False
+ghci> esAtraccionCopada nullish 
+False
+ghci> esAtraccionCopada caletaOlivia 
+True
+
+ghci> esSobria baradero 14
+True
+ghci> esSobria baradero 15
+False
+ghci> esSobria nullish 5
+False
+
+ghci> ciudadConNombreRaro maipu
+False
+ghci> ciudadConNombreRaro azul 
+True
+
+Punto 3:
+ghci> sumarAtraccion azul "Balneario Municipal Alte. Guillermo Brown"
+Ciudad {nombre = "Azul", añoFundacion = 1832, atraccionesPrincipales = ["Teatro Espa\241ol","Parque Municipal Sarmiento","Costanera Cacique Catriel","Balneario Municipal Alte. Guillermo Brown"], costoDeVida = 228}
+
+ghci> crisis azul
+Ciudad {nombre = "Azul", añoFundacion = 1832, atraccionesPrincipales = ["Teatro Espa\241ol","Parque Municipal Sarmiento"], costoDeVida = 171}
+ghci> crisis  nullish 
+Ciudad {nombre = "Nullish", añoFundacion = 1800, atraccionesPrincipales = [], costoDeVida = 126}
+
+ghci> remodelacion azul 50
+Ciudad {nombre = "New Azul", añoFundacion = 1832, atraccionesPrincipales = ["Teatro Espa\241ol","Parque Municipal Sarmiento","Costanera Cacique Catriel"], costoDeVida = 285}
+
+ghci> reevaluacion azul 14
+Ciudad {nombre = "Azul", añoFundacion = 1832, atraccionesPrincipales = ["Teatro Espa\241ol","Parque Municipal Sarmiento","Costanera Cacique Catriel"], costoDeVida = 187}
+ghci> reevaluacion azul 13
+Ciudad {nombre = "Azul", añoFundacion = 1832, atraccionesPrincipales = ["Teatro Espa\241ol","Parque Municipal Sarmiento","Costanera Cacique Catriel"], costoDeVida = 209}

@@ -66,8 +66,10 @@ esAtraccionCopada unaCiudad = (any (isVowel . head) . atraccionesPrincipales) un
 isVowel :: Char -> Bool
 isVowel character = character `elem` "aeiouAEIOU"
 
+{- Punto 2, Integrante 2 -}
 esSobria :: Ciudad -> Int -> Bool
-esSobria unaCiudad cantDeLetras = (all ((> cantDeLetras).length) . atraccionesPrincipales) unaCiudad
+esSobria unaCiudad cantDeLetras =
+                (not . null . atraccionesPrincipales) unaCiudad && (all ((> cantDeLetras).length) . atraccionesPrincipales) unaCiudad
 
 {- Punto 2 , Integrante 3 -}
 ciudadConNombreRaro :: Ciudad -> Bool
@@ -87,12 +89,15 @@ crisis unaCiudad | (null . atraccionesPrincipales) unaCiudad = unaCiudad {costoD
 {- Punto 3, Integrante 2 -}
 remodelacion :: Ciudad -> Integer -> Ciudad
 remodelacion unaCiudad porcentaje = unaCiudad{nombre = ((++) "New " (nombre unaCiudad)) ,
-                                    costoDeVida = costoDeVida unaCiudad +((`div` 100) . (*porcentaje) . costoDeVida) unaCiudad }
+                                    costoDeVida = aumentarCostoDeVida unaCiudad porcentaje }
 
 {- Punto 3, Integrante 3 -}
 reevaluacion :: Ciudad -> Int -> Ciudad
-reevaluacion unaCiudad cantDeLetras | esSobria unaCiudad cantDeLetras = unaCiudad {costoDeVida = costoDeVida unaCiudad + ((`div` 100) . (*10) . costoDeVida) unaCiudad}
+reevaluacion unaCiudad cantDeLetras | esSobria unaCiudad cantDeLetras = unaCiudad {costoDeVida = aumentarCostoDeVida unaCiudad 10}
                                     | otherwise = unaCiudad {costoDeVida = costoDeVida unaCiudad - 3}
 
 bajarCostoDeVida :: Ciudad -> Integer
 bajarCostoDeVida unaCiudad = costoDeVida unaCiudad - ((`div`100) . (*10) . costoDeVida) unaCiudad
+
+aumentarCostoDeVida :: Ciudad -> Integer -> Integer
+aumentarCostoDeVida unaCiudad aumento = costoDeVida unaCiudad +((`div` 100) . (*aumento) . costoDeVida) unaCiudad 
