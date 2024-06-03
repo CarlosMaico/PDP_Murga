@@ -76,8 +76,8 @@ ciudadConNombreRaro :: Ciudad -> Bool
 ciudadConNombreRaro unaCiudad = ((<5) . length . nombre)  unaCiudad
 
 {- Punto 3, Todos los integrantes -}
-sumarAtraccion :: Ciudad -> String -> Ciudad
-sumarAtraccion unaCiudad unaAtraccion = unaCiudad {atraccionesPrincipales = ((++ [unaAtraccion]) . atraccionesPrincipales) unaCiudad,
+sumarAtraccion ::String -> Ciudad -> Ciudad
+sumarAtraccion unaAtraccion unaCiudad = unaCiudad {atraccionesPrincipales = ((++ [unaAtraccion]) . atraccionesPrincipales) unaCiudad,
                                       costoDeVida =  costoDeVida unaCiudad + ((`div`100) . (*20) . costoDeVida) unaCiudad }
 
 {- Punto 3, Integrante 1 -}
@@ -87,17 +87,70 @@ crisis unaCiudad | (null . atraccionesPrincipales) unaCiudad = unaCiudad {costoD
                                           costoDeVida = bajarCostoDeVida unaCiudad }
 
 {- Punto 3, Integrante 2 -}
-remodelacion :: Ciudad -> Integer -> Ciudad
-remodelacion unaCiudad porcentaje = unaCiudad{nombre = ((++) "New " (nombre unaCiudad)) ,
+remodelacion :: Integer -> Ciudad -> Ciudad
+remodelacion porcentaje unaCiudad = unaCiudad{nombre = ((++) "New " (nombre unaCiudad)) ,
                                     costoDeVida = aumentarCostoDeVida unaCiudad porcentaje }
 
 {- Punto 3, Integrante 3 -}
-reevaluacion :: Ciudad -> Int -> Ciudad
-reevaluacion unaCiudad cantDeLetras | esSobria unaCiudad cantDeLetras = unaCiudad {costoDeVida = aumentarCostoDeVida unaCiudad 10}
+reevaluacion :: Int -> Ciudad -> Ciudad
+reevaluacion cantDeLetras unaCiudad | esSobria unaCiudad cantDeLetras = unaCiudad {costoDeVida = aumentarCostoDeVida unaCiudad 10}
                                     | otherwise = unaCiudad {costoDeVida = costoDeVida unaCiudad - 3}
 
 bajarCostoDeVida :: Ciudad -> Integer
 bajarCostoDeVida unaCiudad = costoDeVida unaCiudad - ((`div`100) . (*10) . costoDeVida) unaCiudad
 
 aumentarCostoDeVida :: Ciudad -> Integer -> Integer
-aumentarCostoDeVida unaCiudad aumento = costoDeVida unaCiudad +((`div` 100) . (*aumento) . costoDeVida) unaCiudad 
+aumentarCostoDeVida unaCiudad aumento = costoDeVida unaCiudad + ((`div` 100) . (*aumento) . costoDeVida) unaCiudad 
+
+data Evento = Crisis | Remodelacion Integer | Reevaluacion Int | AgregarAtraccion String deriving Show
+data Anio = Anio{
+        numero :: Int,
+        eventos :: [Evento]
+}deriving Show
+
+anio2022 :: Anio
+anio2022 = Anio{
+    numero = 2022,
+    eventos = [Crisis, Remodelacion 5, Reevaluacion 7]
+}
+
+anio2015 :: Anio
+anio2015 = Anio{
+    numero = 2015,
+    eventos = []
+}
+
+anio2023 :: Anio
+anio2023 = Anio{
+    numero = 2023,
+    eventos = [Crisis, AgregarAtraccion "parque", Remodelacion 10, Remodelacion 20]
+}
+
+aplicarEvento :: Evento -> Ciudad -> Ciudad
+aplicarEvento Crisis = crisis
+aplicarEvento (Remodelacion porcentaje) = remodelacion porcentaje
+aplicarEvento (Reevaluacion letras) = reevaluacion letras
+aplicarEvento (AgregarAtraccion atraccion) = sumarAtraccion atraccion
+
+
+pasoDelAnio :: Anio -> Ciudad -> Ciudad
+pasoDelAnio (Anio _ eventos) unaCiudad = foldl (flip aplicarEvento) unaCiudad eventos
+
+ciudadMejoro :: (Ciudad -> Integer) -> Evento -> Ciudad -> Bool
+ciudadMejoro criterio evento unaCiudad = criterio (aplicarEvento evento unaCiudad) > criterio unaCiudad
+
+criterioCostoDeVida :: Ciudad -> Integer
+criterioCostoDeVida = costoDeVida
+
+criterioCantidadAtracciones :: Ciudad -> Int
+criterioCantidadAtracciones = length . atraccionesPrincipales
+
+aplicarEventosQueSubenCosto :: Anio -> Ciudad -> Ciudad
+aplicarEventosQueSubenCosto (Anio _ eventos) ciudad = foldl (\ciudad evento -> if ciudadMejoro costoDeVida evento ciudad then aplicarEvento evento ciudad else ciudad) ciudad eventos
+
+eventosOrdenados :: Anio -> Ciudad -> Bool
+eventosOrdenados (Anio _ (e:es)) ciudad = go es (aplicarEvento e ciudad)
+  where
+    go [] _ = True
+    go (e:es) ciudadAnterior = let ciudadActual = aplicarEvento e ciudadAnterior
+                               in costoDeVida ciudadActual >= costoDeVida ciudadAnterior && go es ciudadActual

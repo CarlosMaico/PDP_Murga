@@ -42,3 +42,9 @@ ghci> reevaluacion azul 14
 Ciudad {nombre = "Azul", añoFundacion = 1832, atraccionesPrincipales = ["Teatro Espa\241ol","Parque Municipal Sarmiento","Costanera Cacique Catriel"], costoDeVida = 187}
 ghci> reevaluacion azul 13
 Ciudad {nombre = "Azul", añoFundacion = 1832, atraccionesPrincipales = ["Teatro Espa\241ol","Parque Municipal Sarmiento","Costanera Cacique Catriel"], costoDeVida = 209}
+
+punto 4:
+
+ghci> ((`reevaluacion` 20) . crisis . (`remodelacion` 50) . (`sumarAtraccion` "Plaza")) baradero 
+Ciudad {nombre = "New Baradero", añoFundacion = 1615, atraccionesPrincipales = ["Parque del Este","Museo Alejandro Barbich"], costoDeVida = 240}
+
