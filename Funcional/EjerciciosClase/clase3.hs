@@ -1,8 +1,4 @@
-
-
 --1)
-{-# OPTIONS_GHC -Wno-overlapping-patterns #-}
-
 esNotaBochazo :: Integer -> Bool
 esNotaBochazo nota = nota <6
 
@@ -11,7 +7,6 @@ aprobo (nota1, nota2) = (not.esNotaBochazo) nota1 && (not.esNotaBochazo) nota2
 
 promociono :: (Integer, Integer) -> Bool
 promociono (nota1, nota2) = nota1 >= 8 && nota2 >=8
-
 
 --2)
 data Empleado = Comun {sueldo :: Integer, nombre:: String} |
@@ -24,8 +19,6 @@ salario (Jefe sueldoBasico cantPerACargo _) = sueldoBasico + plus cantPerACargo
 plus:: Integer -> Integer
 plus personasACargo = 5000*personasACargo 
 
-
-
 --3)
 
 data Bebida = Cafe {nombreBebida::String} |
@@ -33,6 +26,6 @@ data Bebida = Cafe {nombreBebida::String} |
 
 esEnergizante::Bebida -> Bool
 esEnergizante (Cafe nombre) = nombre == "capuchino"
-esEnergizante (Gaseosa sabor azucar) = sabor == "pomelo" && azucar > 12
-esEnergizante _ = False
+esEnergizante (Gaseosa sabor azucar) = sabor == "pomelo" && azucar > 10
+
 

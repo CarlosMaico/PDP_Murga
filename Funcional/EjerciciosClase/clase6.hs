@@ -31,7 +31,6 @@ gastoTotal' listaEmple = foldr (\(_,gasto) sem -> sem + gasto) 0 listaEmple
 -- foldl (\f acc -> f acc) 2 [(3+), (*2)
 
 --5
-
 type Nombre = String
 type InversinInicial = Int
 type Profesionales = [String]

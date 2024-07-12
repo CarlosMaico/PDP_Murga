@@ -34,3 +34,16 @@ alcachofa unAnimal = modificarPeso nuevoPeso  unAnimal
 nuevoPeso :: Double -> Double
 nuevoPeso peso | peso > 2 = peso * 0.9
                | otherwise = peso * 0.95
+
+hierbaMagica :: Animal -> Animal
+hierbaMagica raton = modificarEnfermedades(const []).modificarEdad (*0) $ raton
+
+
+medicamento :: [(Animal -> Animal)] -> Animal -> Animal
+medicamento hierbas raton = foldl (flip ($))  raton  hierbas
+
+medicamento' :: [(Animal -> Animal)] -> Animal -> Animal
+medicamento' hierbas raton = foldl (\unRaton unaHierba -> unaHierba unRaton) raton hierbas
+
+antiAge :: Animal -> Animal
+antiAge unRaton = medicamento (replicate 3 hierbaBuena ++ [alcachofa]) unRaton
