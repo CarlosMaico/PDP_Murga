@@ -63,7 +63,7 @@ masChapita(Persona):-
     cantidadTareaEstresante(Persona, Cantidad),
     forall(cantidadTareaEstresante(_, OtraCantidad), Cantidad > OtraCantidad).
 
-cantidadTareaEstresante(Persona, Cantidad):- 
+cantidadTareaEstresante(Persona, Cantidad):- %Aca apsa lo mimso si buscamos el mas chapito el generado debe etar donde hago el findall porque ahi necesit concoer el conjunto de tareas respecto a una persona y espa persona debe estar ligada
     persona(Persona),
     findall(Tarea, realizarTareaEstresante(Persona, Tarea), Lista), length(Lista, Cantidad).
     
