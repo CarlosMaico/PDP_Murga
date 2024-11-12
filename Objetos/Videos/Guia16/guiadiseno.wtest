@@ -1,0 +1,54 @@
+import guiadiseno.*
+
+describe "Costo de una TareaSimple" {
+  test "costo de una TareaSimple que no tiene subTareaSimples, sin impuestos y de complejidda minima" {
+    const tarea = new TareaSimple(tiempo = 3)
+    assert.equals(75, tarea.costo())
+  }
+
+  test "costo de una TareaSimple que no tiene subTareaSimples, sin impuestos y de complejidda media" {
+    const tarea = new TareaSimple(tiempo = 3, complejidad = complejidadMedia)
+    assert.equals(78.75, tarea.costo())
+  }
+  test "costo de una TareaSimple que no tiene subTareaSimples, sin impuestos y de complejidda maxima, <10" {
+    const tarea = new TareaSimple(tiempo = 9, complejidad = complejidadMaxima)
+    assert.equals(240.75, tarea.costo())
+  }
+
+  test "costo de una TareaSimple que no tiene subTareaSimples, sin impuestos y de complejidda maxima, >10" {
+    const tarea = new TareaSimple(tiempo = 11, complejidad = complejidadMaxima)
+    assert.equals(304.25, tarea.costo())
+  }
+
+  test "costo de una TareaSimple que no tiene subTareaSimples, sin impuestos y de complejidda maxima, >13" {
+    const tarea = new TareaSimple(tiempo = 17, complejidad = complejidadMaxima)
+    assert.equals(524.75, tarea.costo())
+  }
+
+  test "costo de una TareaSimple con 4 subTareaSimples, sin impuestos y de complejidad minima" {
+    const tarea = new TareaCompuesta(tiempo = 5, subtareas = [
+      new TareaSimple(tiempo = 2),
+      new TareaSimple(tiempo = 1),
+      new TareaSimple(tiempo = 3),
+      new TareaSimple(tiempo = 4)
+    ])
+    assert.equals(130, tarea.costo())
+  }  
+  test "costo de una tarea que no tiene subtareas, con impuestos y de complejidda minima" {
+    const tarea = new TareaSimple(tiempo = 3, complejidad = complejidadMinima, impuestos = #{impuestoA, impuestoB})
+    assert.equals(81, tarea.costo())
+  }
+
+  test "dias de atraso de un pryoecto" {
+    const proyecto = new Proyecto(tareas = [new TareaSimple(tiempo = 3), new TareaSimple(tiempo=10, complejidad = complejidadMedia)])
+
+    assert.equals(5, proyecto.diasMaximosDeAtraso())
+  }
+
+    test "dias de atraso de un pryoecto sin tareas" {
+    const proyecto = new Proyecto(tareas = [])
+
+    assert.equals(0, proyecto.diasMaximosDeAtraso())
+  }        
+}
+

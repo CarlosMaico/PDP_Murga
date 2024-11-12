@@ -1,0 +1,9 @@
+import celu.*
+
+describe "name" {
+    const celular = new Celular() 
+  test "memoria libre del celular si uso calculadora" {
+    celular.agregarAplicacion(calculadora)
+    assert.equals(990, celular.memoriaLibreCelular())
+  }
+}

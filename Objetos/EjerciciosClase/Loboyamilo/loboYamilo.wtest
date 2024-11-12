@@ -1,0 +1,21 @@
+import loboYamilo.*
+
+test "ver calorias de Yamilo" {
+  assert.that(yamilo.calorias()==100)
+}
+
+test "estado de yamilo luego de comer al chanchito de la casa de paja" {
+  yamilo.comer(chanchoDeCasaDePaja)
+  assert.equals(110, yamilo.calorias())
+}
+
+test "yamilo no tiene sobrepeso" {
+  assert.notThat(yamilo.sobrePeso())
+}
+
+test "yamilo corre 10 minutos" {
+  yamilo.correr(10) 
+  assert.equals(80, yamilo.calorias())
+}
+
+

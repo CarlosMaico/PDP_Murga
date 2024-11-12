@@ -1,0 +1,26 @@
+import seguridadVial.*
+
+describe "creo un auto y un conductor" {
+    const unAuto = new Auto(plusVelocidad = 30, tieneRuedaAux = true)
+    const conductor = new Conductor(vehiculo = unAuto, tieneRegistro = true) 
+    const unaMoto = new Moto(velocidad = 130, cantEspejos = 2)
+  test "conductor es seguro si tiene un auto" {
+    assert.that(conductor.esSeguro())
+  }
+
+  test "conductor es seguro con moto" {
+    conductor.vehiculo(unaMoto)
+    assert.that(conductor.esSeguro())
+  }
+
+  test "conductor no seguro con auto" {
+    conductor.tieneRegistro(false)
+    assert.notThat(conductor.esSeguro())
+  }
+
+  test "condcutor no seguro con moto" {
+    conductor.vehiculo(unaMoto)
+    unaMoto.cantEspejos(1)
+    assert.notThat(conductor.esSeguro())
+  }
+}

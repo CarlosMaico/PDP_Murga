@@ -1,0 +1,38 @@
+
+import sueldoPepe.*
+test "pepe cadete que falto 3 dias tien bono fijo y tien bono presntismo por faltas" {
+  pepe.categoria(cadete)
+  pepe.cantFaltas(3)
+  pepe.bonoResultados(bonoFijo)
+  pepe.bonoPresentismo(bonoPorFaltas)
+
+  assert.that(pepe.sueldo() == 15800)
+}
+
+test "pepe gerente bono resultado de porcentaje y bono presentismo independiente de faltas" {
+  pepe.categoria(gerente)
+  pepe.cantFaltas(3)
+  pepe.bonoResultados(bonoPorcentajeSegunNeto)
+  pepe.bonoPresentismo(bonoIndependienteDeFaltas)
+
+  assert.that(pepe.sueldo() == 11000)  
+
+}
+
+test "pepe cadete con bono resultado de porcentaje, bono presentismo por faltas, nunca falto" {
+  pepe.categoria(cadete)
+  pepe.cantFaltas(0)
+  pepe.bonoResultados(bonoPorcentajeSegunNeto)
+  pepe.bonoPresentismo(bonoPorFaltas)
+
+  assert.that(pepe.sueldo() == 17500)
+}
+
+test "pepe cadete con bono resultado de porcentaje, bono presentismo por faltas, 1 falta" {
+  pepe.categoria(cadete)
+  pepe.cantFaltas(1)
+  pepe.bonoResultados(bonoPorcentajeSegunNeto)
+  pepe.bonoPresentismo(bonoPorFaltas)
+
+  assert.that(pepe.sueldo() == 17000)  
+}

@@ -85,14 +85,24 @@ itinerario(Persona, Itinerario):-
 lugaresAVistar(Persona, Lugares):-
     findall(Lugar, seVaA(Persona, Lugar), Lugares).
 
-permutacion([],[]).
+
 permutacion(Lugares, [Lugar|Resto]):-
     member(Lugar, Lugares),
     sacar(Lugares, Lugar, NuevaLista),
     permutacion(NuevaLista, Resto).
+permutacion([],[]).
 
     
 sacar([Lugar|Resto], Lugar, Resto).
 sacar([Otro| Resto], Lugar, [Otro| Lista]):- 
     Otro \= Lugar,
     sacar(Resto, Lugar, Lista).
+
+
+[1,2,3] , 3 , [1|Lista]
+
+[2,3] , 3 , [2|Lista]
+
+[3] -> [|Lista]
+
+sacar(3)

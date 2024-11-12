@@ -1,0 +1,41 @@
+import tomyjerry.*
+
+
+
+test "tom puede atrapar a jerry" {
+  tom.energia(20)
+  jerry.peso(4)
+  assert.that(tom.puedeAtraparA(jerry))
+
+}
+
+test "tom no puede atrapar a jerry" {
+  tom.energia(10)
+  jerry.peso(4)
+  assert.notThat(tom.puedeAtraparA(jerry))
+}
+
+test "luego de correr a jerry tom queda en 6 de enrgia y su posicion actual es 34" {
+  tom.energia(20)
+  jerry.peso(4)
+  tom.posicion(30)
+  jerry.posicion(34)
+  tom.correrA(jerry)
+  assert.equals(6, tom.energia())
+  assert.equals(34, tom.posicion())
+}
+
+test "tom puede atrapar a robotRaton cuando tiene energia de 50" {
+  tom.energia(50)
+  assert.that(tom.puedeAtraparA(robotRaton))
+
+}
+
+test "tom corre a robotRaton" {
+  tom.energia(20)
+  tom.posicion(30)
+  robotRaton.posicion(32)
+  tom.correrA(robotRaton)
+  assert.equals(13, tom.energia())
+  assert.equals(32, tom.posicion())
+}

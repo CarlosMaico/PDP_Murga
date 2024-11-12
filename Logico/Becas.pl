@@ -1,4 +1,4 @@
-%postulante(Persona, LoqueEstudai(CArrea, Promedio General, CAntidad de materias aprobadas))
+%postulante(Persona, LoqueEstudia(CArrea, Promedio General, CAntidad de materias aprobadas))
 %1
 postulante(margarita, estudia(ingenieria,8,20)).
 postulante(mario, estudia(arquitectura,7,10)).
@@ -27,7 +27,10 @@ carrera(Carrera):- postulante(_,estudia(Carrera,_,_)).
 
 cumpleCondicionBeca(Alumno):-
     alumno(Alumno),
-    verificaCondicion(Alumno),
+    verificaCondicion(Alumno).
+
+cumpleCondicionBeca(Alumno):-
+    alumno(Alumno),
     cumpleConOcupacion(Alumno).
 
 verificaCondicion(Alumno):-
@@ -72,7 +75,9 @@ todosTienenBeca(Carrera):-
 conoceAAlguienQueAplique(UnPostulante, OtroPostulante):-
     postulante(UnPostulante), postulante(OtroPostulante),
     not(cumpleCondicionBeca(UnPostualnte)),
-    conoce(UnPostualnte, OtroPostulante).
+    conoce(UnPostualnte, OtroPostulante),
+    cumpleCondicionBeca(OtroPostulante).
+
 conoceAAlguienQueAplique(UnPostualnte, OtroPostulante):-
     conocido(UnPostualnte, OtroPostulante),
     cumpleCondicionBeca(OtroPostulante).

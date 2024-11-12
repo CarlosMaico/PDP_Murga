@@ -1,0 +1,74 @@
+import drCasa.*
+
+describe "group of tests" {
+	
+	const malaria = new Infecciosa(cantCelulasAfectadas = 5000)  //Una cosa es hablar de instancia pero la enfermedad hace lo mismo y cad instncia cae a difernetes personas
+	const otitis = new Infecciosa(cantCelulasAfectadas = 1000)
+	const lupus = new Autoinmune(cantCelulasAfectadas = 5000)
+	const malariaPulenta = new Infecciosa(cantCelulasAfectadas = 80000)
+	
+	const logan = new Persona(temperatura = 36, cantCelulas = 3000000)
+	const frank = new Persona(temperatura = 36, cantCelulas = 3500000)
+    const cameron = new Medico(dosis = 100, temperatura = 36, cantCelulas = 100000)
+	const cuddy = new MedicoJefe(subordinados = [cameron], temperatura = 36, cantCelulas = 10000, dosis = 100)
+	
+	method initialize() {  //se puede usar cuando necesito enviar un mensaje a algo se hace en el intialize
+		logan.contraer(malaria)
+		logan.contraer(otitis)
+		logan.contraer(lupus)
+	}
+
+	test "frank contraer enfermedad" {
+		frank.contraer(malariaPulenta)
+		assert.that(frank.enfermedades().contains(malariaPulenta))
+	}
+	
+	test "maleria reproducir" {
+		malaria.reproducirse()
+		assert.equals(10000, malaria.cantCelulasAfectadas())
+	}
+	
+	test "vivir un dia" {
+		frank.contraer(malariaPulenta)
+		frank.vivirUnDia()
+		assert.equals(45, frank.temperatura())
+	}
+
+//Parte 2
+	test "malaria se atenue en 100 celulas" {
+	  malaria.atenuar(100)
+	  assert.equals(4900, malaria.cantCelulasAfectadas() )
+	}
+
+	test "lupus se atenua en 500 celulas" {
+	  lupus.atenuar(500)
+	  assert.equals(4500, lupus.cantCelulasAfectadas())
+	}
+
+    test "cameron atender a logan"{
+        cameron.atenderA(logan)
+        assert.equals(3500, malaria.cantCelulasAfectadas())
+    }
+
+    test "cudy atienda a logan" {
+      cuddy.atenderA(logan)
+      assert.equals(3500, malaria.cantCelulasAfectadas())
+      assert.equals(0, otitis.cantCelulasAfectadas())
+    }
+
+    test "cameron contraer la malaria" {
+      cameron.contraer(malaria)
+      assert.equals(3500, malaria.cantCelulasAfectadas())
+    }
+    test "cuddy contraer la malaria" {
+      cuddy.contraer(malaria)
+      assert.equals(3500, malaria.cantCelulasAfectadas())
+    }
+
+	test "cuddy contraer hipotermia"{
+	 cuddy.contraer(hipotermia)
+	 hipotermia.afectarA(cuddy)
+	 assert.equals(0, cuddy.temperatura())
+	 assert.that(cuddy.enfermedades().size() == 1)
+	}
+}
